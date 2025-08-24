@@ -11,5 +11,3 @@ app.use("/api/notes", notesRouter)
 app.listen(port, ()=>{
     console.log(`app listening at port ${port}`)
 })
-
-// 
