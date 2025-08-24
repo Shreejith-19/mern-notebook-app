@@ -1,14 +1,13 @@
 import express from "express"
+import { createNotes, deleteNotes, getNotes, updateNotes } from "../controllers/notesController.js"
 const router = express.Router()
 
 router.route("/")
-    .get((req, res)=>{
-        res.status(200).send("hello from router")
-    })
-    
+    .get(getNotes)
+    .post(createNotes)
+
 router.route("/:id")
-    .get((req, res)=>{
-        res.status(200).send(`hello ${req.params.id}`) 
-    })
+    .put(updateNotes)
+    .delete(deleteNotes)
 
 export default router
