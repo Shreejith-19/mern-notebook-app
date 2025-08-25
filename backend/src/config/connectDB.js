@@ -1,15 +1,11 @@
-import mongooose from "mongoose"
-import dotenv from "dotenv"
+import mongoose from "mongoose"
 
-dotenv.config()
-
-const uri = process.env.MONGO_URI
 
 export async function connectDB(){
     try{
-        await mongooose.connect(uri)
+        await mongoose.connect(process.env.MONGO_URI)
         console.log("connected to DB")
     }catch(err){
-        console.error("Connection Failed", err)
+        console.error("Connection Failed", err) 
     }
 }
