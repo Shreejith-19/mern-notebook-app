@@ -27,8 +27,12 @@ export async function createNotes(req, res){
 export async function updateNotes(req, res){
     try {
         const body = req.body
-        await Note.findByIdAndUpdate(req.params.id, {title: body.title, content: body.content})
-        return res.status(200).json({"mesage": "Note updated"})
+        const reqId = req.params.id
+        const updatedNote = await Note.findByIdAndUpdate(reqId, {title: body.title, content: body.content}, {new: true})
+        if(!updatedNote){
+            return res.status(404).json({"message":`${reqId} does not exist`})
+        }
+        return res.status(200).json({"message": "Note updated"})
     } catch (err) {
         console.error(`Error at updateNotes controller: ${err}`)
         return res.status(500).json({"message": "Bad Request"})
