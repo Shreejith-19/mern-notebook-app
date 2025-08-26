@@ -40,5 +40,15 @@ export async function updateNotes(req, res){
 }
 
 export async function deleteNotes(req, res){
-    return res.status(200).json({"meassage":"Notes Deleted"})
+    try {
+        const reqId = req.params.id
+        const deletedNote = await Note.findByIdAndDelete(reqId)
+        if(!deletedNote){
+            return res.status(404).json({"message": "id not found"})
+        }
+        return res.status(200).json({"message": "id deleted successfully"})
+    } catch (err) {
+        console.error(`Error at deleteNotes controller: ${err}`)
+        return res.status(500).json({"message": "Bad request"})
+    }
 }
