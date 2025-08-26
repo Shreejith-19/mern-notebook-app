@@ -25,7 +25,14 @@ export async function createNotes(req, res){
 }
 
 export async function updateNotes(req, res){
-    return res.status(200).json({"meassage":"Notes Updated"}) 
+    try {
+        const body = req.body
+        await Note.findByIdAndUpdate(req.params.id, {title: body.title, content: body.content})
+        return res.status(200).json({"mesage": "Note updated"})
+    } catch (err) {
+        console.error(`Error at updateNotes controller: ${err}`)
+        return res.status(500).json({"message": "Bad Request"})
+    }
 }
 
 export async function deleteNotes(req, res){
