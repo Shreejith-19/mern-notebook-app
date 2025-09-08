@@ -1,5 +1,5 @@
 import express from "express"
-import { createNotes, deleteNotes, getNotes, updateNotes } from "../controllers/notesController.js"
+import { createNotes, deleteNotes, getNoteByID, getNotes, updateNotes } from "../controllers/notesController.js"
 const router = express.Router()
 
 router.route("/")
@@ -7,6 +7,7 @@ router.route("/")
     .post(createNotes)
 
 router.route("/:id")
+    .get(getNoteByID)
     .put(updateNotes)
     .delete(deleteNotes)
 
