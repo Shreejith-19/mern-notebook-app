@@ -1,7 +1,7 @@
 import Note from "../models/Note.js"
 export async function getNotes(req, res){
     try{
-        const notes = await Note.find()//this will fetch all notes in db
+        const notes = await Note.find().sort({createdAt: -1})
         return res.status(200).send(notes)
     }catch(err){
         console.log(`Error in getNodes Controller: ${err}`)
