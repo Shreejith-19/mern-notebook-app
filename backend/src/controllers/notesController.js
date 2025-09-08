@@ -8,6 +8,16 @@ export async function getNotes(req, res){
         return res.status(500).json({"message": "Internal server Error"})
     }
 }
+export async function getNoteByID(req, res){
+    try {
+        const note = await Note.findById(req.params.id)
+        if(!note) return res.status(404).json({"message":"note does not exist"})
+        return res.status(200).send(note)
+    } catch (err) {
+        console.error(`Error at getNotesById controller ${err}`)
+        return res.status(400).json({"message": "unexpected id format"})
+    }
+}
 
 export async function createNotes(req, res){
     try{
