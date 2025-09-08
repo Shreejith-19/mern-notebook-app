@@ -1,5 +1,5 @@
 import Note from "../models/Note.js"
-export async function getNotes(req, res){
+export async function getNotes(_, res){
     try{
         const notes = await Note.find().sort({createdAt: -1})
         return res.status(200).send(notes)
