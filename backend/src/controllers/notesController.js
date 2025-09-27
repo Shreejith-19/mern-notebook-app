@@ -1,13 +1,15 @@
 import Note from "../models/Note.js"
+
 export async function getNotes(_, res){
     try{
-        const notes = await Note.find().sort({createdAt: -1})
+        const notes = await Note.find().sort({createdAt: -1})// sort the notes by newest first
         return res.status(200).send(notes)
     }catch(err){
         console.log(`Error in getNodes Controller: ${err}`)
         return res.status(500).json({"message": "Internal server Error"})
     }
 }
+
 export async function getNoteByID(req, res){
     try {
         const note = await Note.findById(req.params.id)
