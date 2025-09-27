@@ -7,12 +7,11 @@ dotenv.config()
 
 const app = express()
 const port = process.env.PORT || 5000
+connectDB()
+
 //middlewares
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
-
-connectDB()
-
 app.use("/api/notes", notesRouter)
 
 app.listen(port, ()=>{
