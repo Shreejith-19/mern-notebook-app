@@ -8,7 +8,6 @@ dotenv.config()
 
 const app = express()
 const port = process.env.PORT || 5000
-connectDB()
 
 //middlewares
 app.use(rateLimiter)
@@ -16,6 +15,8 @@ app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use("/api/notes", notesRouter)
 
-app.listen(port, ()=>{
-    console.log(`app listening at port ${port}`)
+connectDB().then(()=>{
+    app.listen(port, ()=>{
+        console.log(`app listening at port ${port}`)
+    })
 })
