@@ -1,11 +1,10 @@
-import React from 'react'
-import { useParams } from 'react-router-dom'
+import {useState} from 'react'
+
 const NoteDetailPage = () => {
-    const params = useParams()
+  const [note, setNote] = useState(null)
+  const [loading, setLoading] = useState(false)
   return (
-    <div data-theme = "dracula">
-      Note {params.noteId}
-    </div>
+   <div data-theme = "dracula"></div>
   )
 }
 
