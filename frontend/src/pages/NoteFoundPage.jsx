@@ -1,8 +1,8 @@
-import React from 'react'
+
 import { Link } from 'react-router-dom'
 const NoteFoundPage = () => {
   return (
-    <div>
+    <div data-theme="winter">
       Error : 404 Page Not Found
       <Link to = "/">Go to Home Page</Link>
     </div>
