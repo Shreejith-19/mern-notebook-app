@@ -9,12 +9,11 @@ const NoteDetailPage = () => {
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const navigate = useNavigate()
-  const params = useParams()
-  const id = params.noteId
+  const {noteId} = useParams()
   useEffect(()=>{
     const fetchNote = async()=>{
       try {
-        const res = await axios.get(`http://localhost:5000/api/notes/${id}`)
+        const res = await axios.get(`http://localhost:5000/api/notes/${noteId}`)
         setNote(res.data)
       } catch (error) {
         console.error(error)
@@ -24,16 +23,24 @@ const NoteDetailPage = () => {
       }
     }
     fetchNote()
-  },[id])
+  },[noteId])
 
   const handleDelete = async()=>{
-    //
-  }
-  const handleSave = async()=>{
-    if(!note.title.trim() || !note.content.trim()){
-      toast.error("Missing Fields")
+    if (!window.confirm("Are you sure you want to delete the note?")){
       return
     }
+    try {
+      console.lof
+      await axios.delete(`http://localhost:5000/api/notes/${noteId}`)
+      toast.success("Note Deleted")
+      navigate("/")
+    } catch (error) {
+      toast.error("Failed to Delete")
+      console.error(error)
+    }
+  }
+  const handleSave = async()=>{
+    //
   }
   if (loading){
     return(
@@ -48,13 +55,13 @@ const NoteDetailPage = () => {
       <div className='max-w-2xl mx-auto'>
         <div className='flex items-center justify-between mb-6'>
           <Link to = "/" className='btn btn-ghost'>
-        <ArrowLeftIcon className='h-5 w-5'/>
-        Back to Notes
-        </Link>
-        <button onClick={handleDelete} className='btn btn-error btn-outline'>
-          <TrashIcon className='h-5 w-5'/>
-        Delete Note
-        </button>
+            <ArrowLeftIcon className='h-5 w-5'/>
+            Back to Notes
+          </Link>
+          <button onClick={handleDelete} className='btn btn-error btn-outline'>
+            <TrashIcon className='h-5 w-5'/>
+            Delete Note
+          </button>
         </div>
         <div className='card bg-base-100'>
           <div className="card-body">
@@ -68,8 +75,7 @@ const NoteDetailPage = () => {
               <label className='label'>
                 <span className='label-text'>Content</span>
               </label>
-              <textarea placeholder='Write your note here...' className='textarea textarea-bordered h-32 w-80' value = {note.content} onChange={(e)=> setNote({...note, title: e.target.value})}/> 
-            
+              <textarea placeholder='Write your note here...' className='textarea textarea-bordered h-32 w-80' value = {note.content} onChange={(e)=> setNote({...note, content: e.target.value})}/> 
             </div>
             <div className='card-actions justify-end'>
               <button className='btn btn-primary' disabled = {saving} onClick = {handleSave}>
@@ -83,5 +89,4 @@ const NoteDetailPage = () => {
    </div>
   )
 }
-
 export default NoteDetailPage
