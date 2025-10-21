@@ -2,8 +2,8 @@ import Navbar from './components/Navbar'
 import RateLimit from './components/RateLimit'
 import './index.css'
 import { useState, useEffect } from 'react'
-import axios from 'axios'
 import NoteCard from './components/NoteCard'
+import axios from "axios"
 const HomePage = () => {
   const [isRateLimited, setRateLimited] = useState(false)
   const [notes, setNotes] = useState([])//for fetching notes
