@@ -30,7 +30,6 @@ const NoteDetailPage = () => {
       return
     }
     try {
-      console.lof
       await axios.delete(`http://localhost:5000/api/notes/${noteId}`)
       toast.success("Note Deleted")
       navigate("/")
@@ -40,7 +39,21 @@ const NoteDetailPage = () => {
     }
   }
   const handleSave = async()=>{
-    //
+    if(!note.title.trim() || !note.content.trim()){
+      toast.error("Required Fields are Empty")
+      return
+    }
+    setSaving(true)
+    try {
+      await axios.put(`http://localhost:5000/api/notes/${noteId}`, note)
+      toast.success("Note Update Success!")
+      navigate("/")
+    } catch (error) {
+      toast.error("Update Failed")
+      console.error(error)
+    }finally{
+      setSaving(false)
+    }
   }
   if (loading){
     return(
