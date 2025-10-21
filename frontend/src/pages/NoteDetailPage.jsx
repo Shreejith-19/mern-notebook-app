@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 const NoteDetailPage = () => {
     const params = useParams()
   return (
-    <div>
+    <div data-theme = "dracula">
       Note {params.noteId}
     </div>
   )
