@@ -1,6 +1,6 @@
 import express from "express"
 import dotenv from "dotenv"
-
+import cors from "cors"
 import notesRouter from "./src/routes/notesRoute.js"
 import { connectDB } from "./src/config/connectDB.js"
 import { rateLimiter } from "./src/middlewares/rateLimiter.js"
@@ -10,9 +10,13 @@ const app = express()
 const port = process.env.PORT || 5000
 
 //middlewares
+app.use(cors({
+    origin: "http://localhost:5173"
+}))
 app.use(rateLimiter)
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
+
 app.use("/api/notes", notesRouter)
 
 connectDB().then(()=>{
